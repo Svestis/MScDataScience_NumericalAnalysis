@@ -1,5 +1,6 @@
 library(haven)
 library(expss)
+library(coin)
 
 # Unit 1 - Data Activity 1
 ## 1.1
@@ -61,3 +62,28 @@ mode(health$income)
 ### Five fig summary of income + boxplot
 summary(health$income)
 boxplot(health$income)
+
+### Hypothesis test for relation between sbp and peptic ulcer
+t.test(health$sbp,health$pepticulcer)
+var.test(health$sbp~health$pepticulcer, health)
+cor.test(health$sbp, health$pepticulcer)
+
+#####################
+
+# Unit 8 - Data Activity 6
+### Mean median mode of age
+mean(health$age)
+median(health$age)
+mode(health$age)
+
+### Check if mean/median dbp is the same among diabetic and non-diabetic
+t.test(health$dbp[health$diabetes==1], health$dbp[health$diabetes==2])
+median_test(dbp~as.factor(diabetes), health)
+
+### Check if sbp is different accross occupational group
+median_test(sbp~as.factor(occupation), health)
+cor.test(health$sbp, health$occupation, method="spearman")
+aov(sbp~as.factor(occupation), health)
+
+# Unit 8 - Scenario Based Exercise
+
