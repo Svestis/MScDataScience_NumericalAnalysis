@@ -1,6 +1,7 @@
 library(haven)
 library(expss)
 library(coin)
+library(pollster)
 
 # Unit 1 - Data Activity 1
 ## 1.1
@@ -80,10 +81,30 @@ mode(health$age)
 t.test(health$dbp[health$diabetes==1], health$dbp[health$diabetes==2])
 median_test(dbp~as.factor(diabetes), health)
 
-### Check if sbp is different accross occupational group
+### Check if sbp is different across occupational group
 median_test(sbp~as.factor(occupation), health)
 cor.test(health$sbp, health$occupation, method="spearman")
 aov(sbp~as.factor(occupation), health)
 
 # Unit 8 - Scenario Based Exercise
+vendors<-read_labelled_xlsx("data/Vendors.xlsx","Sheet1")
 
+### Finding mean
+mean(vendors$Vend1)
+mean(vendors$Vend2)
+mean(vendors$Vend3)
+
+### Fixing dataset (columns to rows)
+vendors<-melt(vendors)
+
+
+### Running anova
+anova<-aov(value ~ variable, data=vendors)
+summary(anova)
+TukeyHSD(anova)
+
+#####################
+
+# Unit 9 - Data Activity 7
+
+crosstab(crime, crime$bcsvictim, crime$agegrp7)
