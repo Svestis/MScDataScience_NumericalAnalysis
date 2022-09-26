@@ -1,7 +1,7 @@
 library(haven)
 library(expss)
 library(coin)
-library(pollster)
+library(crosstable)
 
 # Unit 1 - Data Activity 1
 ## 1.1
@@ -95,7 +95,7 @@ mean(vendors$Vend2)
 mean(vendors$Vend3)
 
 ### Fixing dataset (columns to rows)
-vendors<-melt(vendors)
+vendors<-melt(vendors, measure.vars = vendors$value, id.vars = vendors$variable)
 
 
 ### Running anova
@@ -107,4 +107,5 @@ TukeyHSD(anova)
 
 # Unit 9 - Data Activity 7
 
-crosstab(crime, crime$bcsvictim, crime$agegrp7)
+crosstable(crime, bcsvictim, by=agegrp7)%>%
+  as_flextable(keep_id=TRUE)
