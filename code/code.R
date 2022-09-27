@@ -2,6 +2,8 @@ library(haven)
 library(expss)
 library(coin)
 library(crosstable)
+library(janitor)
+library(vtree)
 
 # Unit 1 - Data Activity 1
 ## 1.1
@@ -107,5 +109,30 @@ TukeyHSD(anova)
 
 # Unit 9 - Data Activity 7
 
-crosstable(crime, bcsvictim, by=agegrp7)%>%
-  as_flextable(keep_id=TRUE)
+crosstab_crime <- crime[,c("bcsvictim","agegrp7")]
+
+tabyl(crosstab_crime, bcsvictim, agegrp7)
+
+#####################
+
+# Unit 10 - Data Activity 8
+
+## Finding correlation
+
+cor(health$dbp, health$sbp)
+
+## Scatter plot
+plot(health$dbp, health$sbp)
+abline(lm(health$sbp ~ health$dbp, data = health), col = "blue")
+
+#####################
+
+# Unit 11 - Data Activity 9
+
+## Find linear regression equation
+
+lre <- lm (health$dbp~health$sbp, data=health)
+lre
+
+## Summary
+summary(lre)
